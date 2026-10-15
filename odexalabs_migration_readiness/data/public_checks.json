@@ -1,0 +1,74 @@
+[
+  {
+    "broadcast": {},
+    "business_impact": "Odoo publishes a fixed support window for every version, and a migration scoped against a version already inside \u2014 or past \u2014 that window buys less runway than it looks like. The cost isn't only a second migration coming sooner; it's that a version past its own support date stops receiving security patches, which the earlier hazard content on this topic already covers for the source side. Here it applies to the destination: paying for a migration and landing on a version that itself needs replacing within a year is a scoping problem worth catching before the project starts, not after.\n",
+    "checklist_item": "Confirm the migration target's own Odoo support window before scoping the project\n",
+    "condition": "target_version_supported == False\n",
+    "confidence": "certain",
+    "distribution": "public",
+    "evidence": [
+      "database_name",
+      "odoo_version",
+      "target_version",
+      "target_version_status"
+    ],
+    "family": "migration",
+    "id": "MIG-001",
+    "name": "Migration target itself is approaching or past end of support",
+    "recommendation": "Where the target is \"ending_soon\", confirm the timeline against the current published end-of-support date and weigh whether the next major version is close enough to target instead \u2014 Odoo's annual release cadence means one is often within reach. Where the target is \"unsupported\", treat this as a hazard, not a data-entry check: nothing built or configured against an unsupported version will keep receiving security patches from the day it goes live. Re-scope to a currently supported version unless there is a specific, documented reason not to.\n",
+    "requires": [
+      "odoo.instance"
+    ],
+    "severity": "medium",
+    "symptom": "Partway through scoping a migration, the version being targeted turns out to be one Odoo is about to stop patching, or already has \u2014 so the project now under discussion would need to be repeated again in the near future rather than buying the usual multi-year runway.\n",
+    "symptom_queries": [
+      "is odoo 17 still supported",
+      "odoo version end of life",
+      "which odoo version should I migrate to"
+    ],
+    "technical_explanation": "Every Odoo version carries a fixed support end date, published by Odoo and re-verified annually against its own documentation (see versions/support_matrix.py's staleness guard). A migration project typically runs weeks to months from scoping to cutover, and the version it lands on then needs to remain viable for a further period \u2014 the whole point of migrating rather than staying put. Scoping against a version already inside its support window's final stretch, or one that has already passed its end date, compresses that runway without anyone having decided to accept a shorter one.\n",
+    "validation": {
+      "measure": [
+        "target_version",
+        "target_version_status"
+      ],
+      "method": "re-run odoo.instance with the revised --target-version",
+      "success": "target_version_status reads \"supported\""
+    }
+  },
+  {
+    "broadcast": {},
+    "business_impact": "A migration scoped against a target that isn't actually ahead of the current version produces a report with nothing real to say about upgrade risk, module compatibility or cutover steps \u2014 the questions a migration assessment exists to answer don't apply to \"moving\" to where the instance already is. Catching this before the assessment is written is cheaper than a client reading a report that doesn't match what they asked for.\n",
+    "checklist_item": "Confirm the stated migration target is genuinely ahead of the running version\n",
+    "condition": "target_is_newer_than_current == False\n",
+    "confidence": "certain",
+    "distribution": "public",
+    "evidence": [
+      "database_name",
+      "odoo_version",
+      "target_version"
+    ],
+    "family": "migration",
+    "id": "MIG-002",
+    "name": "Stated migration target does not advance the instance forward",
+    "recommendation": "Re-confirm which version the engagement is actually targeting and re-run the collection with the corrected --target-version. If the instance is genuinely already on the intended target, this is not a migration engagement and the migration-family checks and report section do not apply.\n",
+    "requires": [
+      "odoo.instance"
+    ],
+    "severity": "low",
+    "symptom": "The version named as the migration target turns out to match the version already running, or an older one \u2014 so the plan as stated doesn't describe an upgrade at all, which usually means the target was entered the wrong way round or copied from the wrong engagement.\n",
+    "symptom_queries": [
+      "odoo migration target same version",
+      "odoo upgrade planning wrong version"
+    ],
+    "technical_explanation": "odoo.instance discovers the running series (odoo_version) directly from the authenticated connection; target_version is whatever --target-version asserted for this collection, validated against support_matrix.yaml at the CLI boundary but not checked against the running version there, since the CLI has no instance to compare against until collection actually runs. This check is that comparison, made once the two are in the same evidence row.\n",
+    "validation": {
+      "measure": [
+        "odoo_version",
+        "target_version"
+      ],
+      "method": "re-run odoo.instance with the corrected --target-version",
+      "success": "target_is_newer_than_current reads True"
+    }
+  }
+]

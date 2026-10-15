@@ -1,0 +1,80 @@
+[
+  {
+    "postgres_min": "16",
+    "python_min": "3.12",
+    "released": "2026-09-01",
+    "support_ends": "2029-09-01",
+    "version": "20.0"
+  },
+  {
+    "postgres_min": "13",
+    "python_310_pins": [
+      {
+        "line": 21,
+        "package": "gevent",
+        "version": "21.8.0"
+      },
+      {
+        "line": 25,
+        "package": "greenlet",
+        "version": "1.1.2"
+      }
+    ],
+    "python_min": "3.10",
+    "released": "2025-09-01",
+    "support_ends": "2028-09-01",
+    "version": "19.0"
+  },
+  {
+    "postgres_min": "12",
+    "python_310_pins": [
+      {
+        "line": 23,
+        "package": "gevent",
+        "version": "21.8.0"
+      },
+      {
+        "line": 27,
+        "package": "greenlet",
+        "version": "1.1.2"
+      }
+    ],
+    "python_min": "3.10",
+    "released": "2024-10-01",
+    "support_ends": "2027-09-01",
+    "version": "18.0"
+  },
+  {
+    "postgres_min": "12",
+    "python_310_pins": [
+      {
+        "line": 19,
+        "package": "gevent",
+        "version": "21.8.0"
+      },
+      {
+        "line": 23,
+        "package": "greenlet",
+        "version": "1.1.2"
+      }
+    ],
+    "python_min": "3.10",
+    "released": "2023-11-01",
+    "support_ends": "2026-09-01",
+    "version": "17.0"
+  },
+  {
+    "postgres_min": "12",
+    "python_min": "3.7",
+    "released": "2022-10-01",
+    "support_ends": "2025-09-01",
+    "version": "16.0"
+  },
+  {
+    "postgres_min": "12",
+    "python_min": "3.7",
+    "released": "2021-10-01",
+    "support_ends": "2024-10-01",
+    "version": "15.0"
+  }
+]

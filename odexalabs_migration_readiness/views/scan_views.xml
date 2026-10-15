@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="odexalabs_migration_readiness_view_list_scan" model="ir.ui.view">
+        <field name="name">odexalabs.migration.scan.list</field>
+        <field name="model">odexalabs.migration.scan</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="display_title"/>
+                <field name="current_version"/>
+                <field name="target_version"/>
+                <field name="scan_date"/>
+                <field name="readiness_summary"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="odexalabs_migration_readiness_view_form_scan" model="ir.ui.view">
+        <field name="name">odexalabs.migration.scan.form</field>
+        <field name="model">odexalabs.migration.scan</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_run_scan" type="object"
+                            string="Run scan" class="btn-primary"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="display_title" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="target_version"/>
+                            <field name="current_version"/>
+                            <field name="python_version"/>
+                            <field name="postgres_version"/>
+                        </group>
+                        <group>
+                            <field name="scan_date"/>
+                            <field name="readiness_score" string="Checks passed (%)"/>
+                            <field name="readiness_summary"/>
+                            <field name="probe_budget_seconds"/>
+                        </group>
+                    </group>
+                    <p class="text-muted">
+                        Read-only: the scan only reads this database and the module files on this
+                        server. It changes nothing and sends nothing anywhere.
+                    </p>
+
+                    <notebook>
+                        <page string="Checks" name="checks">
+                            <p class="text-muted">
+                                Yes-or-no questions about this database and the version you are moving
+                                to. "Could not determine" is not a pass.
+                            </p>
+                            <field name="check_finding_ids" readonly="1">
+                                <tree>
+                                    <field name="name" string="Check"/>
+                                    <field name="status"/>
+                                    <field name="skip_reason" string="Why it could not be determined"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name" string="Check"/>
+                                        <field name="status"/>
+                                        <field name="skip_reason" string="Why it could not be determined" attrs="{'invisible': [('status', '!=', 'skipped')]}"/>
+                                        <field name="evidence_summary" string="What was read"/>
+                                    </group>
+                                    <group string="Detail" attrs="{'invisible': [('evidence_detail', '=', False)]}">
+                                        <field name="evidence_detail" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="What this means">
+                                        <field name="explanation" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="What to do">
+                                        <field name="what_to_do" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Technical detail">
+                                        <field name="technical_detail" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Related reading" attrs="{'invisible': [('handbook_url', '=', False)]}">
+                                        <field name="handbook_url" widget="url" nolabel="1" colspan="2"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Modules" name="inv_modules">
+                            <h2>
+                                <field name="installed_module_count" class="oe_inline" readonly="1"/> installed modules ·
+                                <field name="third_party_module_count" class="oe_inline" readonly="1"/> not from Odoo
+                            </h2>
+                            <p class="text-muted">
+                                Installed modules that do not come from Odoo, where each one comes from,
+                                and what it needs before you move to the target version. Odoo's own
+                                modules are not listed: they move with the upgrade.
+                            </p>
+                            <field name="module_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="shortdesc" optional="show"/>
+                                    <field name="author"/>
+                                    <field name="origin"/>
+                                    <field name="size_text"/>
+                                    <field name="dependent_count"/>
+                                    <field name="listed_because" optional="hide"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="name"/>
+                                            <field name="shortdesc"/>
+                                            <field name="author"/>
+                                            <field name="license"/>
+                                            <field name="module_state"/>
+                                        </group>
+                                        <group>
+                                            <field name="db_version"/>
+                                            <field name="disk_version"/>
+                                            <field name="size_text"/>
+                                            <field name="file_count"/>
+                                            <field name="view_count"/>
+                                            <field name="menu_count"/>
+                                            <field name="report_count"/>
+                                        </group>
+                                    </group>
+                                    <group string="For the target version">
+                                        <field name="target_action" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Notes" attrs="{'invisible': [('listed_because', '=', False)]}">
+                                        <field name="listed_because" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Where it comes from">
+                                        <field name="origin"/>
+                                        <field name="origin_signals"/>
+                                    </group>
+                                    <group string="Installed modules that depend on it">
+                                        <field name="dependent_count"/>
+                                        <field name="dependents" attrs="{'invisible': [('dependents', '=', False)]}"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Record ID capacity" name="inv_int4">
+                            <p class="text-muted">
+                                Every type of record (contacts, invoices, journal items…) numbers its
+                                records from a counter that cannot go past 2,147,483,647. This shows how
+                                far each counter has gone, highest share first.
+                                <a href="https://odexalabs.com/odoo-handbook/upgrading-safely#integer-id-ceiling" target="_blank">More about this</a>
+                            </p>
+                            <field name="int4_ids" readonly="1">
+                                <tree>
+                                    <field name="record_type"/>
+                                    <field name="model_name" optional="hide"/>
+                                    <field name="last_value"/>
+                                    <field name="share_used"/>
+                                    <field name="note" optional="hide"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="record_type"/>
+                                        <field name="model_name"/>
+                                        <field name="last_value"/>
+                                        <field name="share_used"/>
+                                        <field name="table_name"/>
+                                        <field name="sequence_name"/>
+                                        <field name="note" attrs="{'invisible': [('note', '=', False)]}"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Largest tables" name="inv_tables">
+                            <p class="text-muted">
+                                The largest tables in this database by size on disk, including their
+                                indexes. Row counts are PostgreSQL's approximation.
+                                <a href="https://odexalabs.com/odoo-handbook/upgrading-safely#schema-changes-large-tables" target="_blank">More about this</a>
+                            </p>
+                            <field name="table_ids" readonly="1">
+                                <tree>
+                                    <field name="sequence" string="#"/>
+                                    <field name="record_type"/>
+                                    <field name="table_name"/>
+                                    <field name="total_size"/>
+                                    <field name="est_rows"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="record_type"/>
+                                        <field name="table_name"/>
+                                        <field name="total_size"/>
+                                        <field name="est_rows"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Customisations" name="inv_studio">
+                            <h2>
+                                Customisations made in the database: <field name="customisation_count" class="oe_inline" readonly="1"/>
+                            </h2>
+                            <p class="text-muted">
+                                Fields, models, views and automation rules added in Studio or under
+                                Settings › Technical rather than by a module.
+                            </p>
+                            <field name="studio_ids" readonly="1">
+                                <tree>
+                                    <field name="kind"/>
+                                    <field name="name"/>
+                                    <field name="label"/>
+                                    <field name="record_type"/>
+                                    <field name="field_type" optional="show"/>
+                                    <field name="created_with"/>
+                                    <field name="item_active" optional="hide"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="kind"/>
+                                        <field name="name"/>
+                                        <field name="label"/>
+                                        <field name="record_type"/>
+                                        <field name="model"/>
+                                        <field name="field_type" attrs="{'invisible': [('kind', '!=', 'field')]}"/>
+                                        <field name="created_with"/>
+                                        <field name="item_active"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Changed standard views" name="inv_views">
+                            <p class="text-muted">
+                                Screens of Odoo's own modules that another module (or a change made in
+                                the database) modifies. When the target version changes the standard
+                                screen, these modifications are the ones to re-check.
+                            </p>
+                            <field name="view_ids" readonly="1">
+                                <tree>
+                                    <field name="module"/>
+                                    <field name="view_name"/>
+                                    <field name="model"/>
+                                    <field name="inherited_xmlid"/>
+                                    <field name="view_active" optional="hide"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="module"/>
+                                        <field name="view_name"/>
+                                        <field name="view_xmlid"/>
+                                        <field name="model"/>
+                                        <field name="inherited_xmlid"/>
+                                        <field name="view_active"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Code to update" name="inv_code">
+                            <p class="text-muted">
+                                Lines in the code of modules not from Odoo that use something the target
+                                version removes or changes.
+                            </p>
+                            <field name="inv_code_summary" nolabel="1" readonly="1"/>
+                            <field name="code_hit_ids" readonly="1">
+                                <tree>
+                                    <field name="explanation"/>
+                                    <field name="module"/>
+                                    <field name="file_path"/>
+                                    <field name="line_number"/>
+                                    <field name="line_text" optional="show"/>
+                                    <field name="since" optional="hide"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="explanation"/>
+                                        <field name="since"/>
+                                        <field name="module"/>
+                                        <field name="file_path"/>
+                                        <field name="line_number"/>
+                                        <field name="line_text"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+
+                        <page string="Needs review" name="assessment">
+                            <field name="human_lead" nolabel="1" readonly="1"/>
+                            <field name="assessment_finding_ids" readonly="1">
+                                <tree>
+                                    <field name="name"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name"/>
+                                    </group>
+                                    <group string="Why no scan answers it">
+                                        <field name="explanation" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="What to do">
+                                        <field name="what_to_do" nolabel="1" colspan="2"/>
+                                    </group>
+                                    <group string="Related reading" attrs="{'invisible': [('handbook_url', '=', False)]}">
+                                        <field name="handbook_url" widget="url" nolabel="1" colspan="2"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="odexalabs_migration_readiness_action_scan" model="ir.actions.act_window">
+        <field name="name">Upgrade Readiness</field>
+        <field name="res_model">odexalabs.migration.scan</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+</odoo>

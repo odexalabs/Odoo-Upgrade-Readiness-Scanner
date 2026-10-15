@@ -1,0 +1,8 @@
+{
+  "MIG-001": {
+    "name": "The target version is approaching or past its end of support",
+    "business_impact": "Odoo publishes an end-of-support date for every version. If the version you are moving to is already in its last months of support, or past them, the migration buys little time before the next one, and after the end date it no longer receives security fixes.",
+    "recommendation": "Check the target's end-of-support month in the detail. If it is close, consider moving to a newer version instead.",
+    "technical_explanation": "Looked up against Odoo's published support dates at month precision: \"ending soon\" from six months before the end month through that month, \"unsupported\" after it."
+  }
+}

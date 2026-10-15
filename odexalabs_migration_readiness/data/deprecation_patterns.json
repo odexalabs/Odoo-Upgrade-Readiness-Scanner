@@ -1,0 +1,887 @@
+[
+ {
+  "id": "fields_view_get",
+  "regex": "\\b_?fields_view_get\\s*\\(|\\bload_views\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "16.0",
+  "removed": "17.0",
+  "explanation": "fields_view_get(), _fields_view_get() and load_views() emit a DeprecationWarning in 16.0, where nothing in Odoo calls them any more (so overrides no longer take effect), and are removed in 17.0, so override get_view() or _get_view() instead.",
+  "source": "odoo/models.py:1626,1654,1704 (15.0); odoo/addons/base/models/ir_ui_view.py:2754-2793 DeprecationWarnings, get_views/_get_view/get_view at 2500,2566,2684 (16.0); absent (17.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "orm_flush_invalidate_recompute",
+  "regex": "\\.invalidate_cache\\s*\\(|\\bdef\\s+invalidate_cache\\s*\\(|\\.recompute\\s*\\(\\s*(?:\\)|\\[|fnames\\b|records\\s*=)|\\]\\s*\\.flush\\s*\\(|\\bself\\.flush\\s*\\(|\\.flush\\s*\\(\\s*(?:\\[|fnames\\b|records\\s*=)",
+  "glob": [
+   "*.py"
+  ],
+  "since": "16.0",
+  "removed": "17.0",
+  "explanation": "The model methods flush(), recompute() and invalidate_cache() emit a DeprecationWarning in 16.0 and are removed in 17.0, so use flush_model(), flush_recordset() or self.env.flush_all() and invalidate_model(), invalidate_recordset() or self.env.invalidate_all() instead.",
+  "source": "odoo/models.py:5668,5982,6135 without warnings (15.0); odoo/models.py:5663,6072,6296 DeprecationWarnings and the replacements at 5684,5696,6091,6106, odoo/api.py flush_all/invalidate_all (16.0); absent from odoo/models.py (17.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "cursor_autocommit",
+  "regex": "\\b\\w*(?:cr|cursor)\\.autocommit\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "16.0",
+  "removed": "17.0",
+  "explanation": "Cursor.autocommit() emits a DeprecationWarning in 16.0 and is removed in 17.0, so set autocommit on the underlying connection (cr._cnx.autocommit = True, as the 16.0 warning says) or drop the call.",
+  "source": "odoo/sql_db.py:419,546 without warnings (15.0); odoo/sql_db.py:451-454,562-563 (16.0); absent (17.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "web_controllers_main",
+  "regex": "\\bodoo\\.addons\\.web\\.controllers\\.main\\b|\\bfrom\\s+odoo\\.addons\\.web\\.controllers\\s+import\\s+(?:.*,\\s*)?main\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "16.0",
+  "removed": "18.0",
+  "explanation": "Odoo 16.0 splits odoo.addons.web.controllers.main into separate modules and leaves only lazy proxies that emit a DeprecationWarning, and 18.0 empties it, so import Home, Binary, DataSet, ReportController and the other names from odoo.addons.web.controllers.home, .binary, .dataset, .report and their sibling modules instead.",
+  "source": "addons/web/controllers/main.py (15.0, holds the classes); addons/web/controllers/main.py:11-55 _MOVED_TO_MAP and __getattr__ warning (16.0, identical in 17.0); addons/web/controllers/main.py:1-8 empty module warning (18.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "stock_production_lot",
+  "regex": "[\"'](?:stock\\.production\\.lot)[\"']|>\\s*(?:stock\\.production\\.lot)\\s*<|\\bmodel_(?:stock_production_lot)\\b|\\b(?:FROM|JOIN|UPDATE|INTO|from|join|update|into)\\s+stock_production_lot\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 renames the stock.production.lot model (table stock_production_lot) to stock.lot, so model references, inherits, xmlids such as stock.model_stock_production_lot and raw SQL on the old table must use the new name.",
+  "source": "addons/stock/models/stock_production_lot.py:24 (15.0); addons/stock/models/stock_lot.py:23 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "stock_location_route",
+  "regex": "[\"'](?:stock\\.location\\.route)[\"']|>\\s*(?:stock\\.location\\.route)\\s*<|\\bmodel_(?:stock_location_route)\\b|\\b(?:FROM|JOIN|UPDATE|INTO|from|join|update|into)\\s+stock_location_route\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 renames the stock.location.route model to stock.route, so model references, inherits, xmlids such as stock.model_stock_location_route and raw SQL on the old table must use the new name.",
+  "source": "addons/stock/models/stock_location.py:421 (15.0); addons/stock/models/stock_location.py:459 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "stock_picking_move_lines",
+  "regex": "\\.move_lines\\b|\\bname=[\"']move_lines[\"']",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 renames the stock.picking field move_lines to move_ids, so code, views and reports that use picking.move_lines must use move_ids.",
+  "source": "addons/stock/models/stock_picking.py:329 (15.0); addons/stock/models/stock_picking.py:369 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "payment_acquirer",
+  "regex": "[\"'](?:payment\\.acquirer)[\"']|>\\s*(?:payment\\.acquirer)\\s*<|\\bmodel_(?:payment_acquirer)\\b|\\bacquirer_(?:id|ids|ref|reference)\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 renames the payment.acquirer model to payment.provider and the acquirer_id, acquirer_ref and acquirer_reference fields of payment tokens and transactions to provider_id, provider_ref and provider_reference.",
+  "source": "addons/payment/models/payment_acquirer.py, payment_token.py:15,24, payment_transaction.py:32,40 (15.0); addons/payment/models/payment_provider.py:15, payment_token.py:14,22, payment_transaction.py:32,40 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "ir_translation_model",
+  "regex": "[\"'](?:ir\\.translation)[\"']|>\\s*(?:ir\\.translation)\\s*<|\\bmodel_(?:ir_translation)\\b|\\b(?:FROM|JOIN|UPDATE|INTO|from|join|update|into)\\s+ir_translation\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 removes the ir.translation model and stores each translated field's translations as JSONB in the field's own column, so read and write them with get_field_translations(), update_field_translations() or with_context(lang=...) instead.",
+  "source": "odoo/addons/base/models/ir_translation.py:151 (15.0); absent, odoo/fields.py:1891 jsonb column and odoo/models.py:3057,3175 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "account_account_type",
+  "regex": "[\"'](?:account\\.account\\.type)[\"']|>\\s*(?:account\\.account\\.type)\\s*<|\\bmodel_(?:account_account_type)\\b|\\buser_type_id\\b|\\bdata_account_type_\\w+",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 removes the account.account.type model, the user_type_id field of accounts and the account.data_account_type_* records, so use the account_type selection field of account.account instead.",
+  "source": "addons/account/models/account_account.py:8,64 (15.0); addons/account/models/account_account.py:44 account_type (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "analytic_tags",
+  "regex": "[\"'](?:account\\.analytic\\.tag)[\"']|>\\s*(?:account\\.analytic\\.tag)\\s*<|\\bmodel_(?:account_analytic_tag)\\b|\\banalytic_tag_ids?\\b|\\baccount_analytic_id\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 removes the account.analytic.tag model, the analytic_tag_ids fields and the account_analytic_id field of purchase and purchase requisition lines, so analytic data is carried by the analytic_distribution JSON field of analytic.mixin instead.",
+  "source": "addons/analytic/models/analytic_account.py:26, addons/purchase/models/purchase.py:937, addons/purchase_requisition/models/purchase_requisition.py:183 (15.0); addons/analytic/models/analytic_mixin.py:8,11 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "mail_channel_partner",
+  "regex": "[\"'](?:mail\\.channel\\.partner)[\"']|>\\s*(?:mail\\.channel\\.partner)\\s*<|\\bmodel_(?:mail_channel_partner)\\b|\\bchannel_last_seen_partner_ids\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 renames the mail.channel.partner model to mail.channel.member and the channel field channel_last_seen_partner_ids to channel_member_ids, and 17.0 renames the member model again to discuss.channel.member.",
+  "source": "addons/mail/models/mail_channel_partner.py:12, mail_channel.py:72 (15.0); addons/mail/models/mail_channel_member.py:11, mail_channel.py:65 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "http_request_rewrite",
+  "regex": "\\brequest\\.jsonrequest\\b|\\b(?:JsonRequest|HttpRequest|WebRequest)\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 rewrites odoo.http, removing the WebRequest, JsonRequest and HttpRequest classes and request.jsonrequest, so read the JSON-RPC body with request.get_json_data() or the route's keyword arguments instead.",
+  "source": "odoo/http.py:163,567,626,729 (15.0); odoo/http.py:1407 Request, 1630 get_json_data (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "report_render_signature",
+  "regex": "\\bdef\\s+_render_qweb_(?:pdf|html|text)\\s*\\(\\s*self\\s*,\\s*(?:res_ids|docids|ids)\\b|\\._render_qweb_(?:pdf|html|text)\\s*\\(\\s*(?:\\[|(?:[\\w.]+\\.)?ids\\b|res_ids\\b|docids\\b)|\\.ref\\(\\s*[\"'][^\"']+[\"']\\s*\\)(?:\\.\\w+\\([^()]*\\))*\\._render_qweb_(?:pdf|html|text)\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "16.0",
+  "explanation": "ir.actions.report._render_qweb_pdf(), _render_qweb_html() and _render_qweb_text() take the report reference (xmlid, report_name, id or record) as their first argument from 16.0, so calls that pass record ids first and overrides with the old (res_ids, data) signature must be updated.",
+  "source": "odoo/addons/base/models/ir_actions_report.py:853,950,962 (15.0); ir_actions_report.py:537 _get_report, 899,970,979 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "account_move_onchange_engine",
+  "regex": "\\b(?:_recompute_dynamic_lines|_onchange_recompute_dynamic_lines|_move_autocomplete_invoice_lines_values|_onchange_invoice_line_ids|_recompute_tax_lines|_recompute_payment_terms_lines|_get_fields_onchange_balance(?:_model)?|_get_fields_onchange_subtotal(?:_model)?|_get_price_total_and_subtotal(?:_model)?|_onchange_price_subtotal|_onchange_mark_recompute_taxes|_get_computed_price_unit|_get_computed_name|exclude_from_invoice_tab)\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 rewrites how account.move keeps its lines in sync, removing _recompute_dynamic_lines(), _move_autocomplete_invoice_lines_values(), _onchange_invoice_line_ids(), the _get_fields_onchange_* and _get_price_total_and_subtotal helpers and the exclude_from_invoice_tab field, so write invoice lines as plain line values and tell them apart by display_type instead.",
+  "source": "addons/account/models/account_move.py:586,691,1002,1134,2218,3879,3963,3985,4116,4162,4200,4341,4435 (15.0); absent, account_move_line.py display_type product/tax/payment_term (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "coupon_to_loyalty",
+  "regex": "[\"'](?:coupon\\.(?:coupon|program|reward|rule|generate\\.wizard)|gift\\.card)[\"']|>\\s*(?:coupon\\.(?:coupon|program|reward|rule)|gift\\.card)\\s*<|\\bmodel_(?:coupon_(?:coupon|program|reward|rule)|gift_card)\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 replaces the coupon and gift_card apps (coupon.program, coupon.coupon, coupon.rule, coupon.reward and gift.card) with the loyalty app, so use the loyalty.program, loyalty.card, loyalty.rule and loyalty.reward models instead.",
+  "source": "addons/coupon/models/coupon_program.py:11, coupon.py:11, coupon_rules.py:9, coupon_reward.py:9, addons/gift_card/models/gift_card.py:9 (15.0); addons/loyalty/models/loyalty_program.py:12, loyalty_card.py:12, loyalty_rule.py:11, loyalty_reward.py:12 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "pricelist_public_price_methods",
+  "regex": "\\bget_products?_price(?:_rule)?\\s*\\(|\\bprice_get\\s*\\(|\\bprice_rule_get(?:_multi)?\\s*\\(",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "The product.pricelist methods get_product_price(), get_products_price(), get_product_price_rule(), price_get(), price_rule_get() and price_rule_get_multi() are removed in 16.0, so call _get_product_price(product, quantity, uom, date), _get_products_price(), _get_product_price_rule() or _price_get() instead, whose third positional argument is no longer the partner.",
+  "source": "addons/product/models/product_pricelist.py:224,237,242,247,251,255 (15.0); addons/product/models/product_pricelist.py:56,76,89,192 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "account_tax_report",
+  "regex": "[\"'](?:account\\.tax\\.report(?:\\.line)?)[\"']|>\\s*(?:account\\.tax\\.report(?:\\.line)?)\\s*<|\\bmodel_(?:account_tax_report(?:_line)?)\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "16.0",
+  "explanation": "Odoo 16.0 removes the account.tax.report and account.tax.report.line models, so tax reports must be defined as account.report records with account.report.line and account.report.expression (engine tax_tags) instead.",
+  "source": "addons/account/models/account_tax_report.py:7,91 (15.0); addons/account/models/account_report.py:24,243,440 (16.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "view_attrs_states",
+  "regex": "(?<![\\w-])(?:attrs|states)\\s*=\\s*[\"']|<attribute\\s+name=[\"'](?:attrs|states)[\"']",
+  "glob": [
+   "*.xml"
+  ],
+  "since": "17.0",
+  "explanation": "Odoo 17.0 rejects views that use the attrs or states attributes (the view fails validation), so write the conditions as Python expressions directly in the invisible, readonly and required attributes instead.",
+  "source": "odoo/addons/base/models/ir_ui_view.py:80-96 transfer_node_to_modifiers (16.0); odoo/addons/base/models/ir_ui_view.py:392-397 ValidationError (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "field_states_param",
+  "regex": "(?<![\\w.])states=(?:\\{|(?:\\w+\\.)*[A-Z_][A-Z0-9_]*\\b)",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "explanation": "The field parameter states (per-state readonly and required) is no longer supported in 17.0 and only logs a warning, so express the condition with readonly or required attributes in the views instead.",
+  "source": "odoo/fields.py:324, odoo/addons/base/models/ir_ui_view.py:62-77 (16.0); odoo/fields.py:318,539-540 (17.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "mail_channel_discuss",
+  "regex": "[\"'](?:mail\\.channel(?:\\.member|\\.rtc\\.session)?)[\"']|>\\s*(?:mail\\.channel(?:\\.member|\\.rtc\\.session)?)\\s*<|\\bmodel_(?:mail_channel(?:_member|_rtc_session)?)\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "17.0",
+  "explanation": "Odoo 17.0 renames the models mail.channel, mail.channel.member and mail.channel.rtc.session to discuss.channel, discuss.channel.member and discuss.channel.rtc.session.",
+  "source": "addons/mail/models/mail_channel.py:33, mail_channel_member.py:11, mail_channel_rtc_session.py:11 (16.0); addons/mail/models/discuss/discuss_channel.py:32, discuss_channel_member.py:17, discuss_channel_rtc_session.py:16 (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "message_post_with_view_template",
+  "regex": "\\b(?:message_post_with_(?:view|template)|_message_compose_with_view)\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "explanation": "message_post_with_view() and message_post_with_template() are removed in 17.0, so call message_post_with_source() with the view or mail template (record or xmlid) and render_values instead.",
+  "source": "addons/mail/models/mail_thread.py:2162,2193,2197 (16.0); addons/mail/models/mail_thread.py:2523-2541 (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "private_read_group_signature",
+  "regex": "\\._read_group\\s*\\(|\\bdef\\s+_read_group\\s*\\(|\\b_read_group_(?:raw|prepare|process_groupby)\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "explanation": "The private _read_group() that 16.0 added with read_group()'s arguments (domain, fields, groupby, offset, limit, orderby, lazy) takes (domain, groupby, aggregates, having, offset, limit, order) in 17.0 and returns a list of tuples, and _read_group_raw(), _read_group_prepare() and _read_group_process_groupby() are removed, so calls and overrides written for 15.0 or 16.0 must be rewritten.",
+  "source": "odoo/models.py:2215,2268,2484 and no _read_group (15.0); odoo/models.py:1981,2047,2205,2284 (16.0); odoo/models.py:1874 (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "onchange_return_domain",
+  "regex": "[\"']domain[\"']\\s*:\\s*\\{\\s*[\"']\\w+[\"']\\s*:|\\[[\"']domain[\"']\\]\\s*=\\s*\\{",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "explanation": "From 17.0 the onchange machinery ignores the domain key returned by an @api.onchange method (15.0 and 16.0 still applied it and logged a deprecation warning), so declare the domain on the field or in the view instead.",
+  "source": "odoo/models.py:6241-6246 (15.0); odoo/models.py:6380-6385 (16.0); odoo/models.py:7009-7028 _apply_onchange_methods only reads value and warning (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "search_count_param",
+  "regex": "[(,]\\s*count\\s*=\\s*True\\b|^\\s*count=True\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "explanation": "BaseModel.search() and _search() no longer accept the count parameter in 17.0, so call search_count(domain) instead.",
+  "source": "odoo/models.py:1535,4722 (16.0); odoo/models.py:1623,5433 (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "environment_manage",
+  "regex": "\\bEnvironment\\.manage\\s*\\(|\\.clear_upon_failure\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "explanation": "api.Environment.manage() and Environment.clear_upon_failure(), deprecated with a DeprecationWarning since 15.0, are removed in 17.0, so drop the with api.Environment.manage(): wrapper and use cr.savepoint() instead of clear_upon_failure().",
+  "source": "odoo/api.py:497-502,710-718 (15.0); odoo/api.py:510-515,733-741 (16.0); absent from odoo/api.py (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "xml_report_act_window_tags",
+  "regex": "<(?:report|act_window)\\b",
+  "glob": [
+   "*.xml"
+  ],
+  "since": "17.0",
+  "explanation": "The <report> and <act_window> shortcut tags, deprecated with a warning in 15.0 and 16.0, are no longer accepted in 17.0 data files (the file fails schema validation), so declare ir.actions.report and ir.actions.act_window records with <record> instead.",
+  "source": "odoo/tools/convert.py:299,339 (15.0); odoo/tools/convert.py:302,342,752-753 (16.0); odoo/tools/convert.py:658-667 tag table and 729-744 RelaxNG check, odoo/import_xml.rng (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "account_invoice_send",
+  "regex": "[\"'](?:account\\.invoice\\.send)[\"']|>\\s*(?:account\\.invoice\\.send)\\s*<|\\bmodel_(?:account_invoice_send)\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "17.0",
+  "explanation": "Odoo 17.0 replaces the account.invoice.send wizard with account.move.send, so inherited wizards, views and code that create it must target account.move.send instead.",
+  "source": "addons/account/wizard/account_invoice_send.py:11 (16.0); addons/account/wizard/account_move_send.py:11 (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "account_chart_template_models",
+  "regex": "[\"'](?:account\\.(?:account|tax|group|fiscal\\.position(?:\\.tax|\\.account)?|reconcile\\.model(?:\\.line)?|tax\\.repartition\\.line)\\.template)[\"']|>\\s*(?:account\\.(?:account|tax|group|fiscal\\.position(?:\\.tax|\\.account)?|reconcile\\.model(?:\\.line)?|tax\\.repartition\\.line)\\.template)\\s*<|\\bmodel_(?:account_(?:account|tax|group|fiscal_position(?:_tax|_account)?|reconcile_model(?:_line)?|tax_repartition_line)_template)\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "17.0",
+  "explanation": "Odoo 17.0 removes the chart template models account.account.template, account.tax.template, account.group.template, account.fiscal.position.template, account.reconcile.model.template and their line templates, so chart templates are provided by @template-decorated methods on the abstract account.chart.template model instead.",
+  "source": "addons/account/models/chart_template.py:282,294,1171,1493,1595,1616,1626,1636,1749 (16.0); addons/account/models/chart_template.py:44,64-65 (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "stock_immediate_transfer",
+  "regex": "[\"'](?:stock\\.immediate\\.transfer(?:\\.line)?|mrp\\.immediate\\.production(?:\\.line)?)[\"']|>\\s*(?:stock\\.immediate\\.transfer|mrp\\.immediate\\.production)\\s*<|\\bmodel_(?:stock_immediate_transfer|mrp_immediate_production)(?:_line)?\\b|\\bimmediate_transfer\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "17.0",
+  "explanation": "Odoo 17.0 removes the stock.immediate.transfer and mrp.immediate.production wizards and the immediate_transfer field of pickings, so code and views that create, inherit or read them must be removed.",
+  "source": "addons/stock/wizard/stock_immediate_transfer.py:18, addons/mrp/wizard/mrp_immediate_production.py:19, addons/stock/models/stock_picking.py:438 (16.0); absent (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "stock_qty_done",
+  "regex": "\\bqty_done\\b|\\bquantity_done\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "17.0",
+  "explanation": "Odoo 17.0 removes the qty_done field of stock.move.line and the quantity_done field of stock.move, so read and write their quantity field (and mark processed moves with picked) instead.",
+  "source": "addons/stock/models/stock_move_line.py:40, stock_move.py:160 (16.0); addons/stock/models/stock_move_line.py:36, stock_move.py:111,158 (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "product_price_compute",
+  "regex": "\\bprice_compute\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "explanation": "product.product.price_compute() and product.template.price_compute() are renamed _price_compute() in 17.0, so calls and overrides must use the new name.",
+  "source": "addons/product/models/product_product.py:626, product_template.py:581 (16.0); product_product.py:731, product_template.py:694 (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "hr_employee_address_home_id",
+  "regex": "\\baddress_home_id\\b|\\bis_address_home_a_company\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "17.0",
+  "explanation": "Odoo 17.0 removes the hr.employee fields address_home_id (the private address partner) and is_address_home_a_company, so use the employee's own private_street, private_city, private_zip, private_state_id, private_country_id, private_email and private_phone fields instead.",
+  "source": "addons/hr/models/hr_employee.py:43,47 (16.0); addons/hr/models/hr_employee.py:49-59 (17.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "get_module_resource",
+  "regex": "\\bget_module_resource\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "removed": "19.0",
+  "explanation": "odoo.modules.get_module_resource() is an alias of get_resource_path() that emits the same DeprecationWarning from 17.0 and is removed in 19.0, so use odoo.tools.misc.file_path('module/path/to/file') instead.",
+  "source": "odoo/modules/module.py:303 (16.0); odoo/modules/module.py:230,240 (17.0); odoo/modules/module.py:205 (18.0); absent from odoo/ (19.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "tree_view_tag",
+  "regex": "<tree\\b|<xpath\\b[^>]*\\bexpr=(?:\"[^\"]*|'[^']*)/tree\\b",
+  "glob": [
+   "*.xml"
+  ],
+  "since": "18.0",
+  "explanation": "Odoo 18.0 renames the tree view type to list, so <tree> view roots and XPath expressions that target tree must use list instead.",
+  "source": "odoo/upgrade_code/17.5-01-tree-to-list.py:10-11",
+  "evidence": "upgrade_code"
+ },
+ {
+  "id": "tree_view_mode",
+  "regex": "<field\\b[^>]*\\bname=[\"'](?:view_mode|binding_view_types)[\"'][^>]*>[^<]*\\btree\\b|[\"']view_mode[\"']\\s*:\\s*[\"'][^\"']*\\btree\\b|\\bview_mode\\s*=\\s*[\"'][^\"']*\\btree\\b|\\bmode=[\"'][^\"']*\\btree\\b|,\\s*[\"']tree[\"']\\s*[)\\]]|\\btree_view_ref\\b|\\.xpath\\(\\s*(?:\"[^\"]*|'[^']*)/tree\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "18.0",
+  "explanation": "Odoo 18.0 renames the tree view type to list, so 'tree' in view_mode, views, binding_view_types, x2many mode attributes, Python arch XPath queries and the tree_view_ref context key must become 'list' (list_view_ref).",
+  "source": "odoo/upgrade_code/17.5-01-tree-to-list.py:9,12-15",
+  "evidence": "upgrade_code"
+ },
+ {
+  "id": "kanban_box_template",
+  "regex": "\\bt-name=[\"']kanban-(?:box|menu)[\"']",
+  "glob": [
+   "*.xml"
+  ],
+  "since": "18.0",
+  "removed": "19.0",
+  "explanation": "Odoo 18.0 deprecates the kanban-box and kanban-menu templates (the web client logs a warning) and 19.0 no longer accepts them, so define 'card' and 'menu' templates instead.",
+  "source": "addons/web/static/src/views/kanban/kanban_arch_parser.js:153 (18.0); 19.0 throws at kanban_arch_parser.js:139-141",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "name_get",
+  "regex": "\\.name_get\\s*\\(|\\bdef\\s+name_get\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "removed": "18.0",
+  "explanation": "BaseModel.name_get() emits a DeprecationWarning in 17.0, where display_name no longer calls it so overrides are ignored, and is removed in 18.0, so override _compute_display_name and read display_name instead.",
+  "source": "odoo/models.py:1570 _compute_display_name calls name_get (16.0); odoo/models.py:1678-1691,1694,1711 (17.0); absent from odoo/models.py (18.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "name_search_override",
+  "regex": "\\b_name_search\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "removed": "18.0",
+  "explanation": "BaseModel._name_search() drops name_get_uid and is called with an order argument in 17.0, so overrides with the 16.0 signature raise TypeError, and is removed in 18.0, where name_search() no longer calls it, so 17.0 overrides take (name, domain, operator, limit, order) and 18.0 code overrides _search_display_name(operator, value) instead.",
+  "source": "odoo/models.py:1647,1651 (16.0); odoo/models.py:1761,1773 (17.0); odoo/models.py:1885,1909 (18.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "user_has_groups",
+  "regex": "\\buser_has_groups\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "18.0",
+  "explanation": "BaseModel.user_has_groups() is removed in 18.0, so use self.env.user.has_groups() (or has_group() for a single group) instead.",
+  "source": "odoo/models.py:1559 (17.0); absent from odoo/ (18.0); odoo/addons/base/models/res_users.py:1159 has_groups (18.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "search_access_rights_uid",
+  "regex": "\\baccess_rights_uid\\s*=",
+  "glob": [
+   "*.py"
+  ],
+  "since": "18.0",
+  "explanation": "BaseModel._search() no longer accepts access_rights_uid in 18.0, so call _search() on a sudo() or with_user() recordset instead.",
+  "source": "odoo/models.py:5433 (17.0); odoo/models.py:5811 (18.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "ir_cron_numbercall_doall",
+  "regex": "[\"'](?:numbercall|doall)[\"']",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "18.0",
+  "explanation": "The ir.cron fields numbercall and doall are removed in 18.0, so cron records and values that set them fail to load and the fields must be dropped.",
+  "source": "odoo/addons/base/models/ir_cron.py:67-68 (17.0); absent from odoo/addons/base/models/ir_cron.py (18.0); unknown field raises in create() at odoo/models.py:5017-5018 (18.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "check_access_rights_rule",
+  "regex": "\\b(?:check_access_rights|check_access_rule|_filter_access_rules(?:_python)?)\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "18.0",
+  "removed": "20.0",
+  "explanation": "check_access_rights(), check_access_rule() and _filter_access_rules() emit a DeprecationWarning in 18.0 and 19.0 and are removed in 20.0, so use check_access() or has_access() and _filtered_access() instead.",
+  "source": "odoo/models.py:4513,4528,4536,4543 (18.0); absent from odoo/orm/models.py (20.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "check_recursion",
+  "regex": "\\b_check_(?:m2m_)?recursion\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "18.0",
+  "removed": "20.0",
+  "explanation": "_check_recursion() and _check_m2m_recursion() emit a DeprecationWarning in 18.0 and 19.0 and are removed in 20.0, so use 'not self._has_cycle()' instead.",
+  "source": "odoo/models.py:6076,6080 (18.0); absent from odoo/orm/models.py (20.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "field_group_operator",
+  "regex": "\\bgroup_operator\\s*=",
+  "glob": [
+   "*.py"
+  ],
+  "since": "18.0",
+  "removed": "20.0",
+  "explanation": "The field parameter group_operator emits a DeprecationWarning in 18.0 and 19.0 and is ignored in 20.0 (logged as an unknown parameter), so rename it to aggregator.",
+  "source": "odoo/fields.py:480-482 (18.0); odoo/orm/fields.py:560-568 unknown-parameter warning, no group_operator handling (20.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "odoo_registry_function",
+  "regex": "\\bodoo\\.registry\\s*\\(|^\\s*from\\s+odoo\\s+import\\s+.*\\bregistry\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "18.0",
+  "removed": "19.0",
+  "explanation": "odoo.registry() emits a DeprecationWarning in 18.0 and no longer exists in 19.0, so use odoo.modules.registry.Registry(dbname) instead.",
+  "source": "odoo/__init__.py:37 (18.0); absent in 19.0 (odoo/init.py)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "tools_ustr",
+  "regex": "\\bustr\\s*\\(|\\bimport\\b.*\\bustr\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "18.0",
+  "removed": "20.0",
+  "explanation": "odoo.tools.ustr() emits a DeprecationWarning in 18.0 and 19.0 and is removed in 20.0, so use str() or bytes.decode() instead.",
+  "source": "odoo/loglevels.py:65-72 (18.0); absent from odoo/ (20.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "sql_constraints",
+  "regex": "\\b_sql_constraints\\s*\\+?=",
+  "glob": [
+   "*.py"
+  ],
+  "since": "19.0",
+  "explanation": "Odoo 19.0 ignores the _sql_constraints attribute and only logs a warning, so declare each constraint as a models.Constraint class attribute instead.",
+  "source": "odoo/upgrade_code/18.1-00-sql-constraint.py:15; odoo/orm/model_classes.py:162-164",
+  "evidence": "upgrade_code"
+ },
+ {
+  "id": "route_type_json",
+  "regex": "(?<!dict\\()\\btype\\s*=\\s*[\"']json[\"']\\s*[,)]",
+  "glob": [
+   "*.py"
+  ],
+  "since": "19.0",
+  "explanation": "@route(type='json') still works in 19.0 as a deprecated alias that emits a DeprecationWarning, so use type='jsonrpc' instead.",
+  "source": "odoo/upgrade_code/18.1-02-route-jsonrpc.py:9-13; odoo/http.py:813-819",
+  "evidence": "upgrade_code"
+ },
+ {
+  "id": "model_cr_uid_context",
+  "regex": "\\._(?:cr|uid|context)\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "19.0",
+  "explanation": "The model properties _cr, _uid and _context still work in 19.0 but emit a DeprecationWarning, so use self.env.cr, self.env.uid and self.env.context instead.",
+  "source": "odoo/upgrade_code/18.5-00-deprecated-properties.py:11; odoo/orm/models.py:5925,5930,5935",
+  "evidence": "upgrade_code"
+ },
+ {
+  "id": "groups_id_field",
+  "regex": "\\bgroups_id\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "19.0",
+  "explanation": "Odoo 19.0 renames the groups_id field to group_ids on res.users, ir.ui.view, ir.ui.menu, ir.actions.act_window, ir.actions.server and ir.actions.report.",
+  "source": "odoo/addons/base/models/res_users.py:386 and ir_ui_view.py:179, ir_ui_menu.py:32, ir_actions.py:323,585, ir_actions_report.py:164 (18.0); res_users.py:257 group_ids (19.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "res_groups_users_field",
+  "regex": "<field\\b[^>]*\\bname=[\"']users[\"']",
+  "glob": [
+   "*.xml"
+  ],
+  "since": "19.0",
+  "explanation": "Odoo 19.0 renames the res.groups field users to user_ids, so <field name=\"users\"> in group records must use user_ids.",
+  "source": "odoo/addons/base/models/res_users.py:176-184 (18.0); odoo/addons/base/models/res_groups.py:9-17 (19.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "res_partner_title",
+  "regex": "\\bres\\.partner\\.title\\b|res_partner_title",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "19.0",
+  "explanation": "Odoo 19.0 removes the res.partner.title model and the title field on res.partner, so references to them must be removed or moved to a custom field.",
+  "source": "odoo/addons/base/models/res_partner.py:184-185,227 (18.0); absent from 19.0",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "api_returns",
+  "regex": "\\bapi\\.returns\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "19.0",
+  "explanation": "The @api.returns decorator is removed in 19.0, so drop it and return the recordset directly.",
+  "source": "odoo/api.py:359 (18.0); absent from odoo/api/__init__.py (19.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "api_model_create_single",
+  "regex": "\\bapi\\.model_create_single\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "16.0",
+  "removed": "19.0",
+  "explanation": "From 16.0 the @api.model_create_single decorator logs a warning that the model is not overriding create() in batch, and 19.0 removes it, so write create() with @api.model_create_multi taking a list of dicts.",
+  "source": "odoo/api.py:401-410 (15.0); odoo/api.py:413-420 (16.0, same in 17.0 and 18.0); absent from odoo/api/__init__.py (19.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "model_clear_caches",
+  "regex": "\\.clear_caches\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "removed": "19.0",
+  "explanation": "Model.clear_caches() emits a DeprecationWarning from 17.0 and is removed in 19.0, so use self.env.registry.clear_cache() (17.0 to 19.0) or self.env.transaction.invalidate_ormcache() (20.0) instead.",
+  "source": "odoo/models.py:1741-1747 (16.0); odoo/models.py:1863-1871 (17.0); odoo/models.py:1968 (18.0); absent from odoo/orm/models.py (19.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "get_resource_path",
+  "regex": "\\bget_resource_path\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "17.0",
+  "removed": "19.0",
+  "explanation": "odoo.modules.module.get_resource_path() emits a DeprecationWarning from 17.0 and is removed in 19.0, so use odoo.tools.misc.file_path('module/path/to/file') instead.",
+  "source": "odoo/modules/module.py:280 (16.0); odoo/modules/module.py:220,229-232 (17.0); odoo/modules/module.py:185 (18.0); absent from odoo/ (19.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "kanban_legacy_helpers",
+  "regex": "\\bkanban_(?:image|color|getcolor|getcolorname)\\s*\\(|\\boe_kanban_colorpicker\\b",
+  "glob": [
+   "*.xml"
+  ],
+  "since": "19.0",
+  "explanation": "The kanban template helpers kanban_image(), kanban_color(), kanban_getcolor(), kanban_getcolorname() and the oe_kanban_colorpicker element are removed in 19.0, so use <field widget=\"image\"/>, the highlight_color attribute and the kanban_color_picker widget instead.",
+  "source": "addons/web/static/src/views/kanban/kanban_color_picker_legacy.js:9,71-73 and kanban_record.js:399-402 (18.0); absent from addons/web/static/src (19.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "read_group_public",
+  "regex": "\\.read_group\\s*\\(|\\bdef\\s+read_group\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "19.0",
+  "removed": "20.0",
+  "explanation": "Model.read_group(domain, fields, groupby, ..., lazy) emits a DeprecationWarning in 19.0 and in 20.0 is replaced by read_group(domain, groupby, aggregates, ...) returning tuples, so use _read_group() in server code or formatted_read_group() for formatted results.",
+  "source": "odoo/orm/models.py:2754 (19.0); odoo/orm/models.py:1930-1941 new signature (20.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "osv_expression_helpers",
+  "regex": "\\bexpression\\.(?:AND|OR|normalize_domain|is_false|distribute_not|domain_combine_anies|prettify_domain|normalize_leaf|is_operator|is_leaf|is_boolean|check_leaf|expression)\\s*\\(|\\bfrom\\s+odoo\\.osv\\.expression\\s+import\\b.*\\b(?:AND|OR|normalize_domain|is_false|distribute_not|domain_combine_anies|prettify_domain|normalize_leaf|is_operator|is_leaf|is_boolean|check_leaf|expression)\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "19.0",
+  "removed": "20.0",
+  "explanation": "The odoo.osv.expression helpers such as AND(), OR() and normalize_domain() emit a DeprecationWarning in 19.0 and are removed with the odoo.osv package in 20.0, so build domains with odoo.fields.Domain instead.",
+  "source": "odoo/osv/expression.py:173,242,248 and the other 'Since 19.0' warnings (19.0); odoo/osv absent (20.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "toggle_active",
+  "regex": "\\.toggle_active\\s*\\(|\\bdef\\s+toggle_active\\s*\\(|\\bname=[\"']toggle_active[\"']",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "19.0",
+  "removed": "20.0",
+  "explanation": "toggle_active() emits a DeprecationWarning in 19.0 and is removed in 20.0, so use action_archive() or action_unarchive() instead.",
+  "source": "odoo/orm/models.py:5802 (19.0); absent from odoo/ and addons/ (20.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "check_field_access_rights",
+  "regex": "\\bcheck_field_access_rights\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "19.0",
+  "removed": "20.0",
+  "explanation": "check_field_access_rights() emits a DeprecationWarning in 19.0 and is removed in 20.0, so use check_field_access(field, operation) (20.0) and fields_get() to list accessible fields.",
+  "source": "odoo/orm/models.py:3438-3442 (19.0); absent from odoo/ (20.0); odoo/orm/models.py:2737 check_field_access (20.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "ir_model_access_and_rule",
+  "regex": "[\"']ir\\.(?:model\\.access|rule)[\"']|\\bir\\.model\\.access\\.csv\\b|\\bmodel_ir_(?:model_access|rule)\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "20.0",
+  "explanation": "Odoo 20.0 replaces the ir.model.access and ir.rule models with ir.access (CSV columns id,name,model_id,group_id/id,operation,domain), so access CSV files, record rules and code that use the old models must be rewritten.",
+  "source": "odoo/addons/base/models/ir_model.py:2081 and ir_rule.py:16 (19.0); odoo/addons/base/models/ir_access.py:66 (20.0); odoo/upgrade_code/19.4-00-ir-access.py",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "registry_clear_cache",
+  "regex": "\\b(?:registry|pool)\\.clear_(?:cache|all_caches)\\s*\\(",
+  "glob": [
+   "*.py"
+  ],
+  "since": "20.0",
+  "explanation": "Registry.clear_cache() and clear_all_caches() are removed in 20.0, so call self.env.transaction.invalidate_ormcache(cache_name) instead.",
+  "source": "odoo/upgrade_code/19.4-00-ormcache-on-transaction.py:11,17; odoo/orm/registry.py:998,1015 (19.0); odoo/orm/environments.py:833 (20.0)",
+  "evidence": "upgrade_code"
+ },
+ {
+  "id": "xml_field_type_base64",
+  "regex": "\\btype=[\"']base64[\"']",
+  "glob": [
+   "*.xml"
+  ],
+  "since": "20.0",
+  "explanation": "type=\"base64\" on file-loading <field> elements still works in 20.0 but emits a DeprecationWarning, so use type=\"bytes\" instead.",
+  "source": "odoo/upgrade_code/19.3-00-base64-in-xml.py:11,17; odoo/tools/convert.py:142-143 (20.0)",
+  "evidence": "upgrade_code"
+ },
+ {
+  "id": "account_report_line_foldable",
+  "regex": "<field\\b[^>]*\\bname=[\"']foldable[\"']",
+  "glob": [
+   "*.xml"
+  ],
+  "since": "20.0",
+  "explanation": "Odoo 20.0 replaces the Boolean foldable field of account.report.line with the computed foldability selection, so drop foldable or set foldability to 'foldable' instead.",
+  "source": "odoo/upgrade_code/19.3-00-account-report-foldable.py:140-164; addons/account/models/account_report.py:387 (19.0) and :443-450 (20.0)",
+  "evidence": "upgrade_code"
+ },
+ {
+  "id": "qweb_t_esc_t_raw",
+  "regex": "\\bt-(?:esc|raw)\\s*=|\\bname=[\"']t-(?:esc|raw)[\"']",
+  "glob": [
+   "*.xml"
+  ],
+  "since": "20.0",
+  "explanation": "Odoo 20.0 server-side QWeb no longer compiles t-esc and t-raw (they are logged as unknown attributes and render nothing; OWL client templates still accept t-esc with a console warning), so use t-out instead.",
+  "source": "odoo/addons/base/models/ir_qweb.py:1664,2487,2497 (19.0); ir_qweb.py:1754 directive list and :1929 unknown-attribute warning (20.0)",
+  "evidence": "removed_symbol",
+  "skip_path": "(^|/)static/"
+ },
+ {
+  "id": "tools_ormcache_import",
+  "regex": "\\btools\\.ormcache\\s*\\(|\\bfrom\\s+odoo\\.tools(?:\\.cache)?\\s+import\\b.*\\bormcache\\b|\\bodoo\\.tools\\.cache\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "20.0",
+  "explanation": "Taking ormcache from odoo.tools (or odoo.tools.cache) still works in 20.0 but emits a DeprecationWarning, so use api.ormcache from odoo.api instead.",
+  "source": "odoo/tools/__init__.py:22-28 and odoo/tools/cache/__init__.py:2 (20.0); odoo/api/__init__.py ormcache export (20.0)",
+  "evidence": "deprecation_warning"
+ },
+ {
+  "id": "tools_ormcache_context",
+  "regex": "\\bormcache_context\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "20.0",
+  "explanation": "tools.ormcache_context is removed in 20.0, so use api.ormcache with explicit context expressions such as 'self.env.context.get(\"lang\")' as cache keys instead.",
+  "source": "odoo/tools/cache.py:164 (19.0); absent from odoo/ (20.0); context keys in api.ormcache e.g. addons/website/models/res_lang.py:17 (20.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "odoo_http_helpers_import",
+  "regex": "\\bfrom\\s+odoo\\.http\\s+import\\b.*\\b(?:content_disposition|serialize_exception|Stream|STATIC_CACHE|STATIC_CACHE_LONG|SessionExpiredException|dispatch_rpc|db_list|db_filter|get_default_session|root|Request|JsonRPCDispatcher|HttpDispatcher|borrow_request)\\b|\\bhttp\\.(?:content_disposition|serialize_exception|Stream|STATIC_CACHE|STATIC_CACHE_LONG|SessionExpiredException|dispatch_rpc|db_list|db_filter|get_default_session|root|Request|JsonRPCDispatcher|HttpDispatcher|borrow_request)\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "20.0",
+  "explanation": "Odoo 20.0 splits odoo.http into submodules and the package itself only exposes request, route, Controller and Response, so import content_disposition and Stream from odoo.http.stream, serialize_exception from odoo.http.dispatcher, and the session and routing helpers from odoo.http.session and odoo.http.router.",
+  "source": "odoo/http.py:349,353,372,389,428,469,514 (19.0); odoo/http/__init__.py (20.0); odoo/http/stream.py:34,53 and dispatcher.py:78 (20.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "odoo_osv_package",
+  "regex": "\\bfrom\\s+odoo\\.osv\\b|\\bimport\\s+odoo\\.osv\\b|^\\s*from\\s+odoo\\s+import\\s+.*\\bosv\\b|\\bodoo\\.osv\\.",
+  "glob": [
+   "*.py"
+  ],
+  "since": "20.0",
+  "explanation": "Odoo 20.0 removes the odoo.osv package (including odoo.osv.expression and its constants), so build and combine domains with odoo.fields.Domain instead.",
+  "source": "odoo/osv/expression.py (19.0); odoo/osv absent (20.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "ir_attachment_datas",
+  "regex": "[\"']datas[\"']\\s*:|\\.datas\\b|\\bname=[\"']datas[\"']",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "20.0",
+  "explanation": "The ir.attachment field datas is removed in 20.0 (a datas value passed to create or write is dropped with a warning), so read and write the raw field (bytes) instead.",
+  "source": "odoo/addons/base/models/ir_attachment.py:471-472 (19.0); ir_attachment.py:534-536 (dropped in create/write), :616 raw (20.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "res_partner_company_type",
+  "regex": "\\bcompany_type\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "20.0",
+  "explanation": "Odoo 20.0 removes the res.partner field company_type and computes is_company itself (stored and read-only), so views, domains and code that use company_type must be rewritten (reads can use is_company).",
+  "source": "odoo/addons/base/models/res_partner.py:282 (19.0); res_partner.py:366-367,946-955 (20.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "company_registry_field",
+  "regex": "\\bcompany_registry\\b",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "20.0",
+  "explanation": "Odoo 20.0 removes company_registry from res.partner and res.company (partner identifiers are now held in vat and the additional_identifiers JSON field), so references to company_registry must be rewritten.",
+  "source": "odoo/addons/base/models/res_partner.py:241 and res_company.py:85 (19.0); res_partner.py:330,735-739 (20.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "ir_actions_report_report_file",
+  "regex": "[\"']report_file[\"']",
+  "glob": [
+   "*.py",
+   "*.xml"
+  ],
+  "since": "20.0",
+  "explanation": "The ir.actions.report field report_file is removed in 20.0, so report records and values that set it fail to load and the field must be dropped (report_name remains).",
+  "source": "odoo/addons/base/models/ir_actions_report.py:180 (19.0); absent, report_name at :57 (20.0)",
+  "evidence": "removed_symbol"
+ },
+ {
+  "id": "tools_namespace_helpers",
+  "regex": "\\btools\\.(?:Query|create_index|index_exists|make_index_name|escape_psql|reverse_order|make_identifier|street_split|mod10r|convert_xml_import|convert_csv_import)\\b|\\bfrom\\s+odoo\\.tools\\s+import\\b.*\\b(?:Query|create_index|index_exists|make_index_name|escape_psql|reverse_order|make_identifier|street_split|mod10r|convert_xml_import|convert_csv_import)\\b|\\bfrom\\s+odoo\\.tools\\.query\\s+import\\b",
+  "glob": [
+   "*.py"
+  ],
+  "since": "20.0",
+  "explanation": "Odoo 20.0 no longer re-exports Query, the SQL index helpers (create_index, index_exists, make_index_name, escape_psql, reverse_order, make_identifier), street_split, mod10r or the convert_*_import helpers from odoo.tools, so import Query from odoo.models and the others from odoo.tools.sql, odoo.tools.business_data and odoo.tools.convert.",
+  "source": "odoo/tools/__init__.py:14-19 and tools/sql.py:22-31 (19.0); odoo/tools/__init__.py (20.0); odoo/models/__init__.py Query (20.0)",
+  "evidence": "removed_symbol"
+ }
+]
