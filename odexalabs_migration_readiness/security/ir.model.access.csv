@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odexalabs_migration_scan_system,odexalabs.migration.scan.system,model_odexalabs_migration_scan,base.group_system,1,1,1,1
+access_odexalabs_migration_finding_system,odexalabs.migration.finding.system,model_odexalabs_migration_finding,base.group_system,1,1,1,1
+access_odexalabs_migration_module_system,odexalabs.migration.module.system,model_odexalabs_migration_module,base.group_system,1,1,1,1
+access_odexalabs_migration_int4_system,odexalabs.migration.int4.system,model_odexalabs_migration_int4,base.group_system,1,1,1,1
+access_odexalabs_migration_table_system,odexalabs.migration.table.system,model_odexalabs_migration_table,base.group_system,1,1,1,1
+access_odexalabs_migration_studio_system,odexalabs.migration.studio.system,model_odexalabs_migration_studio,base.group_system,1,1,1,1
+access_odexalabs_migration_view_system,odexalabs.migration.view.system,model_odexalabs_migration_view,base.group_system,1,1,1,1
+access_odexalabs_migration_code_hit_system,odexalabs.migration.code.hit.system,model_odexalabs_migration_code_hit,base.group_system,1,1,1,1
