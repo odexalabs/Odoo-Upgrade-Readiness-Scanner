@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="odexalabs_migration_readiness_menu_root"
+              name="Upgrade Readiness"
+              web_icon="odexalabs_migration_readiness,static/description/icon.png"
+              sequence="95"/>
+    <menuitem id="odexalabs_migration_readiness_menu_scan"
+              name="Scans"
+              parent="odexalabs_migration_readiness_menu_root"
+              action="odexalabs_migration_readiness_action_scan"
+              sequence="10"/>
+</odoo>

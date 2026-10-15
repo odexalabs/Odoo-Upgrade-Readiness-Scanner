@@ -1,0 +1,191 @@
+
+<div style="background-color: #0f172a; background-image: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); color: #ffffff; padding: 4.5rem 2rem; text-align: center; border-radius: 0 0 50px 50px;">
+    <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 6px 18px; border-radius: 30px; font-size: 0.85rem; font-weight: 700; color: #94a3b8; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.5rem;">Odoo 15 &bull; 16 &bull; 17 &bull; 18 &bull; 19 &nbsp;&bull;&nbsp; Free &amp; open source</div>
+    <h1 style="font-size: 2.9rem; font-weight: 800; margin: 0 0 0.4rem 0; color: #ffffff;">Odoo Upgrade Readiness Scanner</h1>
+    <p style="font-size: 1.15rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #a5b4fc; margin: 0 0 1.2rem 0;">Migration Risk Check</p>
+    <p style="font-size: 1.3rem; color: #cbd5e1; margin: 0 auto 2rem auto; max-width: 820px; font-weight: 300;">See what stands between your database and the next Odoo version, before the upgrade starts.</p>
+    <div style="display: inline-block; background-color: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.15); padding: 1.1rem 2rem; border-radius: 12px; color: #e2e8f0; font-size: 1.02rem; max-width: 780px;">
+        <i class="fa fa-search" style="margin-right: 6px;"></i> One-click scan &nbsp;&bull;&nbsp;
+        <i class="fa fa-lock" style="margin-right: 6px;"></i> Read-only &nbsp;&bull;&nbsp;
+        <i class="fa fa-plug" style="margin-right: 6px;"></i> Works offline
+    </div>
+</div>
+
+<div class="container" style="margin-top: 40px; margin-bottom: 3rem;">
+    <div style="background-color: #ffffff; border-radius: 12px; padding: 8px; border: 1px solid #e2e8f0;">
+        <img src="screenshot-checks.png" alt="An upgrade readiness scan with its results" style="width: 100%; border-radius: 8px;"/>
+    </div>
+</div>
+
+<div style="background-color: #ffffff; padding: 1.5rem 2rem 3.5rem 2rem;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 text-center">
+                <h2 style="font-size: 2rem; font-weight: 800; color: #0f172a; margin-bottom: 1.25rem;">Plan your upgrade with real data</h2>
+                <p style="font-size: 1.12rem; color: #334155; line-height: 1.8;">
+                    Pick the Odoo version you are moving to and press <strong>Run scan</strong>. The scanner checks your
+                    versions and server, finds broken sequences and orphaned records, and lists everything custom that
+                    has to come with you: third-party modules, Studio changes, modified screens and code the new
+                    version no longer supports. Every result opens to the detail: which module, which table, which
+                    file and line.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="background-color: #f8fafc; padding: 3.5rem 2rem; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+    <div class="container">
+        <h2 style="font-size: 2rem; font-weight: 800; color: #0f172a; margin-bottom: 0.75rem; text-align: center;">What it scans</h2>
+        <p style="font-size: 1.05rem; color: #475569; line-height: 1.7; text-align: center; margin-bottom: 2.5rem;">One scan covers your versions, your server, your data and everything custom in the database.</p>
+        <div class="row">
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #dbeafe; color: #1d4ed8; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-calendar"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Version support</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">Whether the version you run today and the version you are moving to are still supported by Odoo, with their end-of-support month.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #dbeafe; color: #1d4ed8; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-server"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Python and PostgreSQL</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">Your server's Python and PostgreSQL versions compared with what the target Odoo version requires.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #ccfbf1; color: #0f766e; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-sort-numeric-asc"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Broken sequences</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">Sequences that have fallen behind the IDs already in their table, and exactly which new record will collide.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #ccfbf1; color: #0f766e; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-chain-broken"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Orphaned records</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">Rows that point at records which no longer exist, counted per foreign key.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #ede9fe; color: #6d28d9; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-puzzle-piece"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Third-party modules</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">Every installed module that is not from Odoo: author, size, what depends on it, where it comes from (OCA, App Store vendor, in-house or Studio) and the next step for the target version.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #ede9fe; color: #6d28d9; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-sitemap"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Removed Odoo modules</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">Your modules that depend on an Odoo Community module the target version no longer ships.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #ede9fe; color: #6d28d9; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-exclamation-triangle"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Unfinished installs</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">Modules left half-installed, half-upgraded or waiting for removal, and modules whose code is newer than the version the database has installed.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #fef3c7; color: #b45309; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-tachometer"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Record ID capacity</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">How close each type of record is to the 2,147,483,647 ID limit, highest first.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #fef3c7; color: #b45309; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-database"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Largest tables</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">The biggest tables by size on disk, with estimated row counts, so you can plan the migration window.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #fce7f3; color: #be185d; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-magic"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Studio and manual customisations</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">Every field, model, view and automation rule created in Studio or by hand in the settings, one by one.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #fce7f3; color: #be185d; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-columns"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Modified Odoo screens</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">Standard Odoo views that your own or third-party modules change, grouped by module.</p>
+            </div></div>
+            <div class="col-md-4 mb-4"><div style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; height: 100%;">
+                <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; text-align: center; border-radius: 10px; background-color: #fce7f3; color: #be185d; font-size: 1.2rem; margin-bottom: 0.9rem;"><i class="fa fa-code"></i></div>
+                <h3 style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Code to update</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.95rem; margin-bottom: 0;">Lines in your custom Python and XML that use something the target version removes or changes, with file and line number. Covers changes from Odoo 16 to Odoo 20.</p>
+            </div></div>
+        </div>
+    </div>
+</div>
+
+<div style="background-color: #ffffff; padding: 3.5rem 2rem;">
+    <div class="container">
+        <h2 style="font-size: 2rem; font-weight: 800; color: #0f172a; margin-bottom: 2rem; text-align: center;">See the results</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <a href="screenshot-sequences.png" target="_blank"><img src="screenshot-sequences.png" alt="A sequence that has fallen behind, with the record that will collide" style="width: 100%; border-radius: 8px; border: 1px solid #e2e8f0;"/></a>
+                <p style="color: #475569; font-size: 0.95rem; text-align: center; margin-top: 0.6rem;">Broken sequences, down to the colliding record</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <a href="screenshot-modules.png" target="_blank"><img src="screenshot-modules.png" alt="Third-party modules with where each one comes from" style="width: 100%; border-radius: 8px; border: 1px solid #e2e8f0;"/></a>
+                <p style="color: #475569; font-size: 0.95rem; text-align: center; margin-top: 0.6rem;">Third-party modules and where they come from</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <a href="screenshot-int4.png" target="_blank"><img src="screenshot-int4.png" alt="Record ID capacity by type of record" style="width: 100%; border-radius: 8px; border: 1px solid #e2e8f0;"/></a>
+                <p style="color: #475569; font-size: 0.95rem; text-align: center; margin-top: 0.6rem;">Record ID capacity for every type of record</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <a href="screenshot-code.png" target="_blank"><img src="screenshot-code.png" alt="Code to update, listed by file and line" style="width: 100%; border-radius: 8px; border: 1px solid #e2e8f0;"/></a>
+                <p style="color: #475569; font-size: 0.95rem; text-align: center; margin-top: 0.6rem;">Code to update, by file and line</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="background-color: #f8fafc; padding: 3.5rem 2rem; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+    <div class="container">
+        <h2 style="font-size: 2rem; font-weight: 800; color: #0f172a; margin-bottom: 2rem; text-align: center;">How it works</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4 text-center">
+                <div style="display: inline-block; width: 52px; height: 52px; line-height: 52px; border-radius: 50%; background-color: #1e1b4b; color: #ffffff; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.9rem;">1</div>
+                <h3 style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Install</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.97rem; margin-bottom: 0;">Install it like any other app. It needs nothing but the base module.</p>
+            </div>
+            <div class="col-md-4 mb-4 text-center">
+                <div style="display: inline-block; width: 52px; height: 52px; line-height: 52px; border-radius: 50%; background-color: #1e1b4b; color: #ffffff; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.9rem;">2</div>
+                <h3 style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Choose your target</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.97rem; margin-bottom: 0;">Pick the Odoo version you are moving to: any newer version up to Odoo 20.</p>
+            </div>
+            <div class="col-md-4 mb-4 text-center">
+                <div style="display: inline-block; width: 52px; height: 52px; line-height: 52px; border-radius: 50%; background-color: #1e1b4b; color: #ffffff; font-size: 1.3rem; font-weight: 800; margin-bottom: 0.9rem;">3</div>
+                <h3 style="font-size: 1.15rem; font-weight: 700; color: #0f172a; margin-bottom: 0.5rem;">Run the scan</h3>
+                <p style="color: #475569; line-height: 1.65; font-size: 0.97rem; margin-bottom: 0;">Results land in clear tabs. Every scan is kept, so you can fix, scan again and compare.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="background-color: #0f172a; background-image: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); padding: 3.5rem 2rem; color: #ffffff;">
+    <div class="container">
+        <h2 style="font-size: 2rem; font-weight: 800; color: #ffffff; margin-bottom: 2rem; text-align: center;">Made to run on your live database</h2>
+        <div class="row">
+            <div class="col-md-3 mb-3"><div style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 1.4rem; height: 100%;">
+                <h4 style="font-size: 1.05rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;"><i class="fa fa-lock" style="margin-right: 6px;"></i>Read-only</h4>
+                <p style="color: #cbd5e1; line-height: 1.7; font-size: 0.94rem; margin-bottom: 0;">The scan only reads. The only thing it saves is its own results.</p>
+            </div></div>
+            <div class="col-md-3 mb-3"><div style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 1.4rem; height: 100%;">
+                <h4 style="font-size: 1.05rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;"><i class="fa fa-plug" style="margin-right: 6px;"></i>Works offline</h4>
+                <p style="color: #cbd5e1; line-height: 1.7; font-size: 0.94rem; margin-bottom: 0;">No outbound connections and no telemetry. Your data stays on your server.</p>
+            </div></div>
+            <div class="col-md-3 mb-3"><div style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 1.4rem; height: 100%;">
+                <h4 style="font-size: 1.05rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;"><i class="fa fa-clock-o" style="margin-right: 6px;"></i>Time-limited</h4>
+                <p style="color: #cbd5e1; line-height: 1.7; font-size: 0.94rem; margin-bottom: 0;">Database queries run under a time limit that you set on the scan.</p>
+            </div></div>
+            <div class="col-md-3 mb-3"><div style="background-color: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 10px; padding: 1.4rem; height: 100%;">
+                <h4 style="font-size: 1.05rem; font-weight: 700; color: #ffffff; margin-bottom: 0.5rem;"><i class="fa fa-user-circle" style="margin-right: 6px;"></i>Admins only</h4>
+                <p style="color: #cbd5e1; line-height: 1.7; font-size: 0.94rem; margin-bottom: 0;">Only users with access to Settings can run scans and see the results.</p>
+            </div></div>
+        </div>
+    </div>
+</div>
+
+<div style="background-color: #ffffff; padding: 3rem 2rem;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1 text-center">
+                <p style="font-size: 1.1rem; color: #0f172a; font-weight: 700; margin-bottom: 0.5rem;">Odoo 15.0, 16.0, 17.0, 18.0 and 19.0 &nbsp;&bull;&nbsp; Community and Enterprise</p>
+                <p style="font-size: 1.02rem; color: #475569; line-height: 1.8; margin-bottom: 0;">
+                    Made by <a href="https://odexalabs.com" target="_blank" style="color: #2563eb; font-weight: 600;">Odexalabs</a>,
+                    AI agent, performance, PostgreSQL, infrastructure and migration engineering for Odoo.<br/>
+                    Full user guide: <a href="https://odexalabs.com/odoo-migration-readiness-scanner" target="_blank" style="color: #2563eb; font-weight: 600;">odexalabs.com/odoo-migration-readiness-scanner</a>
+                    &nbsp;&bull;&nbsp; Questions: <a href="mailto:support@odexalabs.com" style="color: #2563eb; font-weight: 600;">support@odexalabs.com</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

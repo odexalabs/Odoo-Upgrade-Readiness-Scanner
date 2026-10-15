@@ -1,0 +1,71 @@
+[
+  {
+    "id": "MRS-005",
+    "name": "Your current Odoo version is approaching or past its end of support",
+    "condition": "current_version_supported == False",
+    "evidence": [
+      "odoo_version",
+      "current_version_status"
+    ],
+    "business_impact": "Odoo publishes an end-of-support date for every version. After it, the version this database runs no longer receives security and bug fixes from Odoo, which puts a deadline on the migration itself.",
+    "recommendation": "Plan the migration to finish before the end-of-support month shown in the detail, or plan for running an unsupported version until it does.",
+    "technical_explanation": "Looked up against Odoo's published support dates for the version this database runs, at month precision: \"ending soon\" from six months before the end month through that month, \"unsupported\" after it.",
+    "handbook": ""
+  },
+  {
+    "id": "MRS-001",
+    "name": "Python is below the target version's stated minimum",
+    "condition": "python_below_target_min == True",
+    "evidence": [
+      "python_version",
+      "target_version",
+      "target_python_min"
+    ],
+    "business_impact": "The Odoo version you are moving to states a minimum Python version, and the Python running this server is older than it. The target's own startup code asserts that minimum, so the server's Python has to be upgraded as part of the migration, not discovered during it.",
+    "recommendation": "Plan the Python upgrade into the migration: the server that will run the target needs at least the Python version shown in the evidence. Install the target's requirements on that Python, on a copy of the server, before fixing a cutover date.",
+    "technical_explanation": "The running interpreter is read from sys.version_info and compared with the minimum the target's source declares (MIN_PY_VERSION, in odoo/__init__.py for 17.0 and 18.0 and in odoo/release.py from 19.0). Meeting the minimum is a separate question from whether Odoo's pinned requirements install: the evidence detail lists the gevent and greenlet versions the target's requirements.txt pins for Python 3.10 exactly, with their line numbers, whatever Python this server runs.",
+    "handbook": ""
+  },
+  {
+    "id": "MRS-002",
+    "name": "PostgreSQL is below the target version's stated minimum",
+    "condition": "postgres_below_target_min == True",
+    "evidence": [
+      "postgres_version",
+      "target_version",
+      "target_postgres_min"
+    ],
+    "business_impact": "The Odoo version you are moving to states a minimum PostgreSQL major version, and this database server runs an older one. It is below the stated minimum. Where Odoo's source checks it (19.0 and 20.0), it issues a warning at connection time rather than refusing, so a server that starts is not evidence that the combination is supported.",
+    "recommendation": "Upgrade PostgreSQL to at least the stated minimum. Doing it as its own step, with the instance verified working in between, keeps the two upgrades separable if something regresses.",
+    "technical_explanation": "The server version is read from server_version_num on this database connection and compared with the target's stated minimum major version. For 19.0 and 20.0 that minimum is MIN_PG_VERSION in odoo/release.py, used by a warning in odoo/sql_db.py. 17.0 and 18.0 define no minimum in their source; their minimum comes from Odoo's installation documentation.",
+    "handbook": "https://odexalabs.com/odoo-handbook/upgrading-safely#postgresql-version-alignment"
+  },
+  {
+    "id": "MRS-003",
+    "name": "A sequence is behind its column's maximum id",
+    "condition": "sequence_behind_max_found == True",
+    "evidence": [
+      "sequences_checked",
+      "sequences_behind",
+      "sequences_not_checked"
+    ],
+    "business_impact": "At least one table's id sequence will hand out an id that the table already holds. Each one is listed with the value it issues next, the column's current maximum, and the first insert that collides. An insert that is handed an id already in use fails with a duplicate key error, and every listed table keeps reaching such ids until its sequence is moved past the maximum.",
+    "recommendation": "Move each listed sequence past its column's maximum before anyone creates records in that table, for example SELECT setval('<sequence>', (SELECT MAX(id) FROM <table>)). This module only reads and does not change any sequence for you.",
+    "technical_explanation": "For every sequence owned by a column, or used as a column's default, the value a new session's nextval() returns is read from the sequence's last_value and is_called, and compared with MAX() of that column. When the next value is at or below the maximum, the scan looks up the smallest id already in use at or above it, which is where the first insert collides. A sequence the scan has no privilege to read, or whose MAX() did not finish within the probe limit, is listed as not checked with the reason, and the check is not reported as clear.",
+    "handbook": "https://odexalabs.com/odoo-handbook/upgrading-safely#sequence-resets"
+  },
+  {
+    "id": "MRS-004",
+    "name": "Rows violate a foreign key constraint",
+    "condition": "fk_violation_found == True",
+    "evidence": [
+      "foreign_keys_checked",
+      "foreign_keys_violated",
+      "foreign_keys_not_checked"
+    ],
+    "business_impact": "Rows in at least one table reference rows that do not exist in the table their foreign key points to. Each constraint is listed with the table and column, the referenced table, and the number of rows where the scan counted them. PostgreSQL refuses to validate or re-create a foreign key while rows like these exist.",
+    "recommendation": "Treat each listed constraint as a question before a cleanup. Deleting the rows, clearing the reference and re-pointing it at the right parent are different answers, and which one is right depends on the data. This module changes nothing.",
+    "technical_explanation": "One anti-join per foreign key: rows whose referencing columns are all non-null and have no matching row in the referenced table. Each probe runs under its own statement timeout inside a savepoint, smallest tables first, within an overall time budget for the scan. A probe that times out, or that the budget did not reach, is listed as not checked with its constraint name, and the check is not reported as clear.",
+    "handbook": "https://odexalabs.com/odoo-handbook/upgrading-safely#orphan-rows"
+  }
+]
